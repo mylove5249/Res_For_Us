@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Forum{% endblock %}
+
+{% block main_content %}
+    <h2>{{ object.subject }}</h2>
+    <p>
+        {% if object.get_next %}
+        [다음글]&nbsp;<a href="{{object.get_next.get_absolute_url}}">{{ object.get_next }}</a>
+        {% endif %}
+        &nbsp;|&nbsp;
+        {% if object.get_previous %}
+        [이전글]&nbsp;<a href="{{object.get_previous.get_absolute_url}}">{{ object.get_previous }}</a>
+        {% endif %}
+    </p>
+    <div>
+        {{object.mainphoto}}
+    </div>
+    <div>
+        {{object.writer}} &nbsp; &nbsp; &nbsp; {{ object.last_update }}
+    </div>
+    <hr>
+    <div>
+        {{ object.message }}
+    </div>
+    <div>
+        <p>{{object.address}}</p>
+    </div>
+    
+
+{% endblock %}

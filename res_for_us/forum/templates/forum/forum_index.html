@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Res. For Us - Forum{% endblock title %}
+{% block main_content %}
+    <section class='main-section'>
+        <h1>Res. Review Forum</h1>
+        <div>
+            <form class='search-box'>
+                <select id='search_type'>
+                    <option value='title'> title</option>
+                    <option value='text'>text</option>
+                    <option value='writer'>writer</option>
+                </select>
+                <input id='search-input' type='text'>
+                <button class='search-button'>Search</button>
+            </form>
+        </div>
+    </section>
+    <section class='sub-section'>
+        <div style='width:100%;text-align:right;margin-bottom:30px;'>
+            <a href='/forum/add/' class='button'>Post</a>
+        </div>
+        <table class="forum-table">
+            <thead class="thead-inverse forum-table-head">
+                <tr>
+                    <th>image</th>
+                    <th>작성일자</th>
+                    <th>작성자</th>
+                    <th>제목</th>
+                    <th>주소</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for forum in forums %}
+                <tr>
+                    {% if forum.mainphoto %}
+                    <td><img src = "{{ forum.mainphoto.url }}" alt="" height="60"></td>
+                    {% endif %}
+                    <td>{{forum.last_updated}}</td>
+                    <td>{{forum.writer}}</td>
+                    <td><a href='/blog/forum/{{ forum.slug }}'>{{forum.subject}}</a></td>
+                    <td>{{forum.address}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {# page_obj : paging과 관련된 정보를 관리하는 객체 #}
+        {% if page_obj.has_previous  %}
+            <a href="?page={{page_obj.previous_page_number}}">PreviousPage</a>
+        {% endif %}
+        &nbsp;&nbsp;[page {{ page_obj.number }} of {{page_obj.paginator.num_pages}}]&nbsp;&nbsp;
+        {% if page_obj.has_next  %}
+            <a href="?page={{page_obj.next_page_number}}">NextPage</a>
+        {% endif %}
+    </section>
+{% endblock main_content %}

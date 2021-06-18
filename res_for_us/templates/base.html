@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>{% block title %}{% endblock title %}</title>
+		<meta charset="utf-8" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="/static/css/fontawesome-all.min.css" />
+		<link rel="stylesheet" href="/static/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="{% url 'home' %}" class="logo"> <strong style='font-size:200%;'>Res. For Us</strong>------<strong>Res</strong>taurant <strong>For Us</strong></a>
+								</header>
+								{% block main_content %}
+								{% endblock main_content %}
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Search -->
+								<section id="search" class="alt">
+									<form method="post" action="#">
+										<input type="text" name="query" id="query" placeholder="Search" />
+									</form>
+									<ul id='account' class='anonymous-icon-and-username'>
+										{% if user.is_active %}
+										<li style='padding:0;'><img class='anonymous-icon' src='/static/images/anonymous-icon.jpg'></li>
+										{% endif %}
+										<li style='padding:0;font-size:20px;'>{% if user.is_active %}{{ user.get_username }}님{% else %}Anonymous{% endif %}</li>
+										<li>{% if user.is_active %}안녕하세요!{% else %}<a href='/accounts/register/'>Create Account</a>{% endif %}</li>
+										<ul class='icons'>
+											<li>
+												{% if user.is_active %}<a href='/accounts/logout/'>Logout</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href='/accounts/password_change/'>Change Password</a>
+												{% else %}<a href='/accounts/login/'>Login</a>{% endif %}
+											</li>
+										</ul>
+									<ul>
+								</section>
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="{% url 'home' %}">Homepage</a></li>
+										<li>
+											<span class="opener">Res. Review</span>
+											<ul>
+												<li><a href="/forum/">Review Forum</a></li>
+												<li><a href="/forum/add/">Add Review</a></li>
+												<li><a href="#">Modify Review</a></li>
+												<li><a href="#">Delete Review</a></li>
+											</ul>
+										</li>
+																				<li>
+											<span class="opener">Search Restaurant</span>
+											<ul>
+												<li><a href="#">Search For Map(KAKAO Map)</a></li>
+												<li><a href="#">Search For Address</a></li>
+											</ul>
+										</li>
+										<li><a href="#">자유게시판</a></li>
+										<li>
+											<span class="opener">Account 관리</span>
+											<ul>
+												{% if user.is_active %}
+												<li><a href="/accounts/password_change/">Change Password</a></li>
+												<li><a href="#">Edit Forum</a></li>
+												<li><a href="/accounts/logout/">Logout</a></li>
+												{% else %}
+												<li><a href="/accounts/register/">Register</a></li>
+												<li><a href="/accounts/login/">Login</a></li>
+												{% endif %}
+											</ul>
+										</li>
+									</ul>
+								</nav>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Popular Restaurants</h2>
+									</header>
+									<div class="mini-posts">
+										<article>
+											<a href="#" class="image"><img src="/static/images/pic07.jpg" alt="" /></a>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="/static/images/pic08.jpg" alt="" /></a>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="/static/images/pic09.jpg" alt="" /></a>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+										</article>
+									</div>
+									<ul class="actions">
+										<li><a href="#" class="button">More</a></li>
+									</ul>
+								</section>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Get in touch</h2>
+									</header>
+									<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+									<ul class="contact">
+										<li class="icon solid fa-envelope"><a href="#">test@test.com</a></li>
+										<li class="icon solid fa-phone">(010) 0000-0000</li>
+										<li class="icon solid fa-home">1234 Somewhere Road #8254<br />
+										Nashville, TN 00000-0000</li>
+									</ul>
+								</section>
+
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright">&copy; KDH. All rights reserved.</p>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="/static/js/jquery.min.js"></script>
+			<script src="/static/js/browser.min.js"></script>
+			<script src="/static/js/breakpoints.min.js"></script>
+			<script src="/static/js/util.js"></script>
+			<script src="/static/js/main.js"></script>
+			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=df9fe65860b1ad629a7ab889559ae502&libraries=services"></script>			
+			{% block custom_js %}
+			{% endblock custom_js %}
+	</body>
+</html>
