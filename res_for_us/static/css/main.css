@@ -2363,3 +2363,15 @@ button,
   background-color: #9fa3a6;
   padding:30px;
 }
+
+.detail-section{
+  padding:30px;
+
+}
+
+.ctk-table{
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  padding:10px;
+}

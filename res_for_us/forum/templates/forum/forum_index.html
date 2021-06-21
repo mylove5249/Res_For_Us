@@ -8,7 +8,7 @@
                 <select id='search_type'>
                     <option value='title'> title</option>
                     <option value='text'>text</option>
-                    <option value='writer'>writer</option>
+                    <option value='owner'>owner</option>
                 </select>
                 <input id='search-input' type='text'>
                 <button class='search-button'>Search</button>
@@ -22,7 +22,6 @@
         <table class="forum-table">
             <thead class="thead-inverse forum-table-head">
                 <tr>
-                    <th>image</th>
                     <th>작성일자</th>
                     <th>작성자</th>
                     <th>제목</th>
@@ -34,12 +33,10 @@
                 <tr>
                     {% if forum.mainphoto %}
                     <td><img src = "{{ forum.mainphoto.url }}" alt="" height="60"></td>
-                    {% else %}
-                    <td></td>
                     {% endif %}
                     <td>{{forum.last_updated}}</td>
-                    <td>{{forum.writter}}</td>
-                    <td><a href='/blog/forum/{{ forum.slug }}'>{{forum.subject}}</a></td>
+                    <td>{{forum.owner}}</td>
+                    <td><a href='forum/{{ forum.slug }}'>{{forum.subject}}</a></td>
                     <td>{{forum.address}}</td>
                 </tr>
                 {% endfor %}

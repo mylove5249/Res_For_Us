@@ -3,29 +3,124 @@
 {% block title %}Forum{% endblock %}
 
 {% block main_content %}
-    <h2>{{ object.subject }}</h2>
-    <p>
-        {% if object.get_next %}
-        [다음글]&nbsp;<a href="{{object.get_next.get_absolute_url}}">{{ object.get_next }}</a>
+    <section class='detail-section'>
+        <h2>{{ object.subject }}</h2>
+        {% comment %} <p>
+            {% if object.get_next %}
+            [다음글]&nbsp;<a href="{{object.get_next.get_absolute_url}}">{{ object.get_next }}</a>
+            {% endif %}
+            &nbsp;|&nbsp;
+            {% if object.get_previous %}
+            [이전글]&nbsp;<a href="{{object.get_previous.get_absolute_url}}">{{ object.get_previous }}</a>
+            {% endif %}
+        </p> {% endcomment %}
+        {% if object.mainphoto %}
+        <div>
+            {{object.mainphoto}}
+        </div>
         {% endif %}
-        &nbsp;|&nbsp;
-        {% if object.get_previous %}
-        [이전글]&nbsp;<a href="{{object.get_previous.get_absolute_url}}">{{ object.get_previous }}</a>
-        {% endif %}
-    </p>
-    <div>
-        {{object.mainphoto}}
-    </div>
-    <div>
-        {{object.writer}} &nbsp; &nbsp; &nbsp; {{ object.last_update }}
-    </div>
-    <hr>
-    <div>
-        {{ object.message }}
-    </div>
-    <div>
-        <p>{{object.address}}</p>
-    </div>
+        <div>
+             writter : {{object.owner}} &nbsp; &nbsp; &nbsp; 작성일 : {{ object.last_updated }}
+        </div>
+        <hr>
+        <div>
+            <h3>Address</h3>
+            <p class = 'class-address'>{{object.address}}</p>
+        </div>
+        <div class='map' id='map'>
+        </div>
+        <hr>
+        <div class='ctk-table'>
+            <div>
+                <h3>Clean</h3>
+                <p class='cleaned'>{{object.cleaned}}</p>
+            </div>
+            <div>
+                <h3>Taste</h3>
+                <p class='taste'>{{object.taste}}</p>
+            </div>
+            <div>
+                <h3>Kindness</h3>
+                <p class='kindness'>{{object.kindness}}</p>
+            </div>
+        </div>
+        <hr>
+        <div>
+            <h3>내용</h3>
+            {{ object.message }}
+        </div>
+    </section>
+
+    
     
 
 {% endblock %}
+
+{% block custom_js %}
+<script>
+$(function(){
+    var address = '{{ object.address }}';
+    $('.map').empty();
+
+    var mapContainer = document.getElementById('map'),
+    mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };  
+
+    // 지도를 생성합니다    
+    var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+    // 주소-좌표 변환 객체를 생성합니다
+    var geocoder = new kakao.maps.services.Geocoder();
+
+    // 주소로 좌표를 검색합니다
+    geocoder.addressSearch(address, function(result, status) {
+        // 정상적으로 검색이 완료됐으면 
+        if (status === kakao.maps.services.Status.OK) {
+
+            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+            // 결과값으로 받은 위치를 마커로 표시합니다
+            var marker = new kakao.maps.Marker({
+                map: map,
+                position: coords
+            });
+
+            // 인포윈도우로 장소에 대한 설명을 표시합니다
+            var infowindow = new kakao.maps.InfoWindow({
+                content: '<div style="width:150px;text-align:center;padding:6px 0; border: 1px solid gainsboro;">' + address + '</div>'
+            });
+            infowindow.open(map, marker);
+
+            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+            map.setCenter(coords);
+        } 
+    });
+    const ctk = ['.cleaned', '.taste','.kindness'];
+    const ctk_num1 = ['{{object.cleaned}}','{{object.taste}}','{{object.kindness}}'];
+    const ctk_num2 = [];
+    var a = 0;
+    for(var i=0;i<3;i++){
+        a = parseInt(ctk_num1[i]);
+        ctk_num2.push(a);
+    }
+    var str = '';
+    for(var k=0;k<3;k++){
+        str = '';
+        if(ctk[k]==0){
+            str = '☆☆☆☆☆';
+        }
+        else{
+            for(var j=0;j<ctk_num2[k];j++){
+                str = str +'★';
+            }
+            for(var l=0;l<(5-ctk_num2[k]);l++){
+                str = str +'☆';
+            }
+        }
+        $(ctk[k]).text(str);
+    }
+});
+</script>
+{% endblock custom_js %}

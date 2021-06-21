@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView, View
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView
 from django.views.generic import ListView
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
@@ -27,9 +27,14 @@ class ForumCreateView(LoginRequiredMixin, CreateView):
     fields = ['subject', 'slug', 'address', 'cleaned', 'taste', 'kindness', 'message']
     initial = {'slug': 'auto-filling-do-not-input'} 
     #fields = ['title', 'description', 'content', 'tags'] 
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('forum:index')
     
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
         return super().form_valid(form)
+
+class ForumDV(DetailView):
+    model = Forum 
+    template_name = "forum/forum_detail.html"
+    context_object_name = 'object'

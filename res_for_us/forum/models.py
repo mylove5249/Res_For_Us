@@ -17,7 +17,7 @@ class Forum(models.Model):
     kindness = models.IntegerField()
     last_updated = models.DateField(auto_now_add=True, null=True)
     slug = models.SlugField(verbose_name="SLUG", max_length=100, allow_unicode=True, help_text="one word for title alias")
-    writter = models.ForeignKey(User, verbose_name="WRITTER", on_delete=models.CASCADE, null=True)    
+    owner = models.ForeignKey(User, verbose_name="OWNER", on_delete=models.CASCADE, blank=True, null=True)    
 
     class Meta:
         verbose_name = 'forum'
@@ -45,7 +45,7 @@ class Forum(models.Model):
 class Reply(models.Model):
     message = models.TextField(max_length=5000)
     created_at = models.DateTimeField(auto_now_add=True)
-    created_by= models.ForeignKey(User, null=True, related_name='posts',on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, null=True, related_name='posts',on_delete=models.CASCADE)
     updated_at = models.DateField(null = True)
     updated_by=  models.ForeignKey(User,null=True,related_name='+',on_delete=models.CASCADE)
 

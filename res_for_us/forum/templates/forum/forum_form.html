@@ -17,6 +17,10 @@
     <form action="." method="post" class="card pt-3">
 
         <div class="form-group row">
+            <label class="col-form-label col-sm-2 ml-3 font-weight-bold" for="id_cleaned">Writter : <span name="writter" cols="10" rows="1" class="form-control class-writter" required id="id_writter">{{user}}</span></label>
+        </div>
+        
+        <div class="form-group row">
             {{ form.subject|add_label_class:"col-form-label col-sm-2 ml-3 font-weight-bold" }}
             <div class="col-sm-5">
                 {{ form.subject|add_class:"form-control"|attr:"autofocus" }}
@@ -41,19 +45,19 @@
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-form-label col-sm-2 ml-3 font-weight-bold" for="id_cleaned">Clean:</label>
+            <label class="col-form-label col-sm-2 ml-3 font-weight-bold" for="id_cleaned">Clean: &nbsp;&nbsp;0~5까지 숫자만 입력해주세요.</label>
             <div class="col-sm-5">
                 <textarea name="cleaned" cols="40" rows="1"  class="form-control class-cleaned" required id="id_cleaned"></textarea>
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-form-label col-sm-2 ml-3 font-weight-bold" for="id_taste">Taste:</label>
+            <label class="col-form-label col-sm-2 ml-3 font-weight-bold" for="id_taste">Taste:&nbsp;&nbsp;0~5까지 숫자만 입력해주세요.</label>
             <div class="col-sm-5">
                 <textarea name="taste" cols="40" rows="1" class="form-control class-taste" required id="id_taste"></textarea>
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-form-label col-sm-2 ml-3 font-weight-bold" for="id_kindness">Kindness:</label>
+            <label class="col-form-label col-sm-2 ml-3 font-weight-bold" for="id_kindness">Kindness:&nbsp;&nbsp;0~5까지 숫자만 입력해주세요.</label>
             <div class="col-sm-5">
                 <textarea name="kindness" cols="40" rows="1" class="form-control class-kindness" required id="id_kindness"></textarea>
             </div>
@@ -67,12 +71,12 @@
             <small class="form-text text-muted">{{ form.message.help_text }}</small>
         </div>
 
-        <div class="form-group row">
+        {% comment %} <div class="form-group row">
             <label class="col-form-label col-sm-2 ml-3 font-weight-bold" for="id_mainphoto">Photo:</label>
             <div class="col-sm-5">
                 <input type="file" name="mainphoto" multiple required id="id_mainphoto">
             </div>
-        </div>
+        </div> {% endcomment %}
 
 		{% comment %}
         <div class="form-group row">

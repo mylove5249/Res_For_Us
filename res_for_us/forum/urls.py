@@ -14,11 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from .views import ForumLV, ForumCreateView
+from django.urls import path, include, re_path
+from .views import ForumLV, ForumCreateView, ForumDV
+
+app_name='forum'
 
 urlpatterns = [
     path('', ForumLV.as_view(), name='index'),
     # path('list/',View.as_view(), name='forum_list'),
+    re_path(r'^forum/(?P<slug>[-\w]+)/$', ForumDV.as_view(), name="forum_detail"),
     path('add/', ForumCreateView.as_view(), name="add",),
+
 ]
