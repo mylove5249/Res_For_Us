@@ -27,7 +27,7 @@ class ForumCreateView(LoginRequiredMixin, CreateView):
     fields = ['subject', 'slug', 'address', 'cleaned', 'taste', 'kindness', 'message']
     initial = {'slug': 'auto-filling-do-not-input'} 
     #fields = ['title', 'description', 'content', 'tags'] 
-    success_url = reverse_lazy('forum:index')
+    success_url = reverse_lazy('home')
     
 
     def form_valid(self, form):

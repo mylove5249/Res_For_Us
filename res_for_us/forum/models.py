@@ -17,7 +17,7 @@ class Forum(models.Model):
     kindness = models.IntegerField()
     last_updated = models.DateField(auto_now_add=True, null=True)
     slug = models.SlugField(verbose_name="SLUG", max_length=100, allow_unicode=True, help_text="one word for title alias")
-    writter = models.ForeignKey(User, related_name='forums',on_delete=models.CASCADE, null=True)    
+    writter = models.ForeignKey(User, verbose_name="WRITTER", on_delete=models.CASCADE, null=True)    
 
     class Meta:
         verbose_name = 'forum'

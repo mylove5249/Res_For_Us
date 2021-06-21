@@ -17,7 +17,7 @@
     </div>
     {% endif %}
 
-    <form action="https://www.pythonanywhere.com/user/mylove5249/files/home/mylove5249/apps/saferestaurant/templates/" method="post" class="card pt-3">{% csrf_token %}
+    <form action="/templates/" method="post" class="card pt-3">{% csrf_token %}
 
         <div class="form-group row">
             {{ form.username|add_label_class:"col-form-label col-sm-2 ml-3 font-weight-bold" }}

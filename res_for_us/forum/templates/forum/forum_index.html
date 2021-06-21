@@ -34,9 +34,11 @@
                 <tr>
                     {% if forum.mainphoto %}
                     <td><img src = "{{ forum.mainphoto.url }}" alt="" height="60"></td>
+                    {% else %}
+                    <td></td>
                     {% endif %}
                     <td>{{forum.last_updated}}</td>
-                    <td>{{forum.writer}}</td>
+                    <td>{{forum.writter}}</td>
                     <td><a href='/blog/forum/{{ forum.slug }}'>{{forum.subject}}</a></td>
                     <td>{{forum.address}}</td>
                 </tr>
