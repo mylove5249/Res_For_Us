@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
-from .views import ForumLV, ForumCreateView, ForumDV
+from .views import ForumLV, ForumCreateView, ForumDV, SearchView
+from django.views.decorators.csrf import csrf_exempt
 
 app_name='forum'
 
@@ -24,5 +25,6 @@ urlpatterns = [
     # path('list/',View.as_view(), name='forum_list'),
     re_path(r'^forum/(?P<slug>[-\w]+)/$', ForumDV.as_view(), name="forum_detail"),
     path('add/', ForumCreateView.as_view(), name="add",),
+    path('search/',csrf_exempt(SearchView.as_view()), name='search_result'),
 
 ]

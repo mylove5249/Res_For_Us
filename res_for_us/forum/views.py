@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import AccessMixin
 from forum.models import Forum
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.http import HttpResponse, JsonResponse
 
 
 
@@ -38,3 +38,30 @@ class ForumDV(DetailView):
     model = Forum 
     template_name = "forum/forum_detail.html"
     context_object_name = 'object'
+
+class SearchView(View):
+    def get(self, request):
+
+        search_type = request.GET['type']
+        search_name = request.GET['name']
+
+        connection_info = { 'host': 'localhost', 'db': 'res_for_us', 'user': 'root', 'password': 'Kweondh123!', 'charset': 'utf8' }
+        import pymysql
+
+        conn = pymysql.connect(**connection_info)
+        cursor = conn.cursor()
+        sql = "select subject, address, DATE_FORMAT(last_updated, \"%Y년 %m월 "+"%"+"d일\"), slug, owner_id from forum_forum where "+ search_type + " like \"%" + search_name + "%\""
+        cursor.execute(sql)
+        row = cursor.fetchall()
+        keys = ["subject", "address", "last_updated", "slug", "owner"]
+        result = []
+        for row_idx in row:
+            result.append(dict(zip(keys, row_idx)))
+
+        conn.close()
+
+        import json
+
+        json_result = json.dumps(result, ensure_ascii=False)
+        return HttpResponse(json_result, content_type="application/json") 
+

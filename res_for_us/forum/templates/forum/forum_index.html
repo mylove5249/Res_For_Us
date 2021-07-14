@@ -6,9 +6,8 @@
         <div>
             <form class='search-box'>
                 <select id='search_type'>
-                    <option value='title'> title</option>
-                    <option value='text'>text</option>
-                    <option value='owner'>owner</option>
+                    <option value=2>subject</option>
+                    <option value=3>address</option>
                 </select>
                 <input id='search-input' type='text'>
                 <button class='search-button'>Search</button>
@@ -28,7 +27,7 @@
                     <th>주소</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class='tbody-inverse'>
                 {% for forum in forums %}
                 <tr>
                     {% if forum.mainphoto %}
@@ -52,3 +51,34 @@
         {% endif %}
     </section>
 {% endblock main_content %}
+
+{% block custom_js %}
+<script type='text/javascript'>
+$(function(){
+    $('.search-button').on('click',function(){
+        $('.tbody-inverse').empty();
+        const search_list = [parseInt($('#search_type option:selected').val()), $('#search-input').val()];
+        $.ajax({
+            'url':'/forum/search/',
+            'method':'GET',
+            'dataType': 'json',
+            'data':{'type':search_list[0], 'name':search_list[1]}, 
+            'success':function(result_list, status, xhr){
+                var tr = $('<tr></tr>');
+                for(var i=0;i<result_list.length();i++){
+                    tr = $('<tr></tr>');
+                    $('<td></td>').text(result_list['last_updated']).appendTo(tr);
+                    $('<td></td>').text(result_list['owner']).appendTo(tr);
+                    $('<td></td>').append($('<a></a>').attr('href',result_list['slug']).text(result_list['subject'])).appendTo(tr);
+                    $('<td></td>').text(result_list['address']).appendTo(tr);
+                    tr.appendTo($('.tbody-inverse'));
+                }
+            },
+                'error':function(status, xhr, err){
+                alert('처리 안 됨');
+            }
+        });
+    });
+});
+</script>
+{% endblock custom_js %}
